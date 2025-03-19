@@ -11,7 +11,8 @@ Menu:
 2. Displaying a list of all transactions sorted by type (income, expenses), by category or by amount
 3. Deleting financial transactions
 4. Editing financial transactions
-5. Exit
+5. Displaying all transactions
+6. Exit
         ''')
 
         choice = int(input("Enter your choice: "))
@@ -38,23 +39,27 @@ Enter your choice: """))
                 print("Invalid choice")
                 continue
 
-            desc = int(input("Sorting ascending(1) or descending(2): "))
-            print()
-            if desc == 1:
-                desc = True
-            elif desc == 2:
-                desc = False
+            if sorting == "transaction_amount":
+                value = int(input("Enter value of transaction amount: "))
+            elif sorting == "transaction_category":
+                value = input("Enter value of transaction category(salary, business, shop, entertainment): ")
+            elif sorting == "transaction_type":
+                value = input("Enter value of transaction type(income, expenses): ")
             else:
                 print("Invalid choice")
                 continue
 
-            print(tracker.show_all_financial_transactions(sorting, desc))
+            print(tracker.sort_all_financial_transactions(sorting, value))
 
         elif choice == 3:
+            print(tracker.show_all_financial_transactions())
+
             index = int(input("Enter index: "))
             print(tracker.delete_financial_transactions(index))
 
         elif choice == 4:
+            print(tracker.show_all_financial_transactions())
+
             index = int(input("Enter index: "))
             transaction_amount = int(input("Enter amount of transaction or skip: "))
             transaction_amount = transaction_amount if transaction_amount else False
@@ -66,6 +71,9 @@ Enter your choice: """))
             print(tracker.edit_financial_transactions(index, transaction_amount, transaction_category, transaction_type))
 
         elif choice == 5:
+            print(tracker.show_all_financial_transactions())
+
+        elif choice == 6:
             print("Exiting...")
             break
 
