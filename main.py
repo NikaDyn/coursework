@@ -8,11 +8,12 @@ def main():
         print('''
 Menu:
 1. Adding new financial transactions (income, expenses)
-2. Displaying a list of all transactions sorted by type (income, expenses), by category or by amount
-3. Deleting financial transactions
-4. Editing financial transactions
-5. Displaying all transactions
-6. Exit
+2. Filtering by type, by category or by amount
+3. Sorting by type, by category or by amount
+4. Deleting financial transactions
+5. Editing financial transactions
+6. Displaying all transactions
+7. Exit
         ''')
 
         choice = int(input("Enter your choice: "))
@@ -40,7 +41,7 @@ Enter your choice: """))
                 continue
 
             if sorting == "transaction_amount":
-                value = int(input("Enter value of transaction amount: "))
+                value = input("Enter value of transaction amount: ")
             elif sorting == "transaction_category":
                 value = input("Enter value of transaction category(salary, business, shop, entertainment): ")
             elif sorting == "transaction_type":
@@ -49,19 +50,48 @@ Enter your choice: """))
                 print("Invalid choice")
                 continue
 
-            print(tracker.sort_all_financial_transactions(sorting, value))
+            print(tracker.filter_all_financial_transactions(sorting, value))
 
         elif choice == 3:
-            print(tracker.show_all_financial_transactions())
+            sorting = int(input("""Sorting by: 
+1. Transaction amount
+2. Transaction category
+3. Transaction type
+Enter your choice: """))
 
-            index = int(input("Enter index: "))
-            print(tracker.delete_financial_transactions(index))
+            if sorting == 1:
+                sorting = "transaction_amount"
+            elif sorting == 2:
+                sorting = "transaction_category"
+            elif sorting == 3:
+                sorting = "transaction_type"
+            else:
+                print("Invalid choice")
+                continue
+
+            desc = int(input("Sorting ascending(1) or descending(2): "))
+            print()
+            if desc == 1:
+                desc = True
+            elif desc == 2:
+                desc = False
+            else:
+                print("Invalid choice")
+                continue
+
+            print(tracker.sort_all_financial_transactions(sorting, desc))
 
         elif choice == 4:
             print(tracker.show_all_financial_transactions())
 
             index = int(input("Enter index: "))
-            transaction_amount = int(input("Enter amount of transaction or skip: "))
+            print(tracker.delete_financial_transactions(index))
+
+        elif choice == 5:
+            print(tracker.show_all_financial_transactions())
+
+            index = int(input("Enter index: "))
+            transaction_amount = input("Enter amount of transaction or skip: ")
             transaction_amount = transaction_amount if transaction_amount else False
             transaction_category = input("Enter category(salary, business, shop, entertainment) of transaction or skip: ")
             transaction_category = transaction_category if transaction_category else False
@@ -70,10 +100,10 @@ Enter your choice: """))
 
             print(tracker.edit_financial_transactions(index, transaction_amount, transaction_category, transaction_type))
 
-        elif choice == 5:
+        elif choice == 6:
             print(tracker.show_all_financial_transactions())
 
-        elif choice == 6:
+        elif choice == 7:
             print("Exiting...")
             break
 
